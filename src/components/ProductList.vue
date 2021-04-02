@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="6" v-for="(product, index) in getProducts" :key="index">
+      <el-col :span="6" v-for="(product, index) in products" :key="index">
         <el-card :body-style="{ padding: '0px', height: '400px' }">
           <img
             :src="product.image"
@@ -27,11 +27,7 @@ export default {
     products: Array,
   },
 
-  computed: {
-    getProducts() {
-      return this.products ? this.products : "none";
-    },
-  },
+  computed: {},
 };
 </script>
 
