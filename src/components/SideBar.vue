@@ -16,18 +16,22 @@ export default {
           label: "Men Clothing",
           children: [
             {
+              value: "men clothing",
               label: "T-Shirt",
               children: [],
             },
             {
+              value: "men clothing",
               label: "Jean",
               children: [],
             },
             {
+              value: "men clothing",
               label: "Jacket",
               children: [],
             },
             {
+              value: "men clothing",
               label: "Vest",
               children: [],
             },
@@ -37,20 +41,24 @@ export default {
           label: "Women Clothing",
           children: [
             {
-              label: "Level two 2-1",
-              children: [
-                {
-                  label: "Level three 2-1-1",
-                },
-              ],
+              value: "women clothing",
+              label: "T-Shirt",
+              children: [],
             },
             {
-              label: "Level two 2-2",
-              children: [
-                {
-                  label: "Level three 2-2-1",
-                },
-              ],
+              value: "women clothing",
+              label: "Jean",
+              children: [],
+            },
+            {
+              value: "women clothing",
+              label: "Jacket",
+              children: [],
+            },
+            {
+              value: "women clothing",
+              label: "Vest",
+              children: [],
             },
           ],
         },
@@ -58,40 +66,57 @@ export default {
           label: "Electronics",
           children: [
             {
+              value: "electronics",
               label: "Mobile Phone",
               children: [],
             },
             {
+              value: "electronics",
               label: "Laptop",
               children: [],
             },
             {
+              value: "electronics",
               label: "PC",
               children: [],
             },
             {
+              value: "electronics",
               label: "PC Gear",
               children: [
                 {
+                  value: "electronics",
                   label: "Screen",
+                  children: [],
                 },
                 {
+                  value: "electronics",
                   label: "Keyboard",
+                  children: [],
                 },
                 {
+                  value: "electronics",
                   label: "Mouse",
+                  children: [],
                 },
                 {
+                  value: "electronics",
                   label: "VGA",
+                  children: [],
                 },
                 {
+                  value: "electronics",
                   label: "Hard Drive",
                   children: [
                     {
+                      value: "electronics",
                       label: "HDD",
+                      children: [],
                     },
                     {
+                      value: "electronics",
                       label: "SSD",
+                      children: [],
                     },
                   ],
                 },
@@ -103,72 +128,24 @@ export default {
           label: "Jewelery",
           children: [
             {
-              label: "Ring",
-              children: [
-                {
-                  label: "Dimond",
-                },
-                {
-                  label: "Platinum",
-                },
-                {
-                  label: "Gold",
-                },
-                {
-                  label: "Silver",
-                },
-              ],
+              value: "jewelery",
+              label: "Dimond",
+              children: [],
             },
             {
-              label: "Necklace",
-              children: [
-                {
-                  label: "Dimond",
-                },
-                {
-                  label: "Platinum",
-                },
-                {
-                  label: "Gold",
-                },
-                {
-                  label: "Silver",
-                },
-              ],
+              value: "jewelery",
+              label: "Platinum",
+              children: [],
             },
             {
-              label: "Bracelet",
-              children: [
-                {
-                  label: "Dimond",
-                },
-                {
-                  label: "Platinum",
-                },
-                {
-                  label: "Gold",
-                },
-                {
-                  label: "Silver",
-                },
-              ],
+              value: "jewelery",
+              label: "Gold",
+              children: [],
             },
             {
-              label: "Earrings",
-              children: [
-                {
-                  label: "Dimond",
-                },
-                {
-                  label: "Platinum",
-                },
-                {
-                  label: "Gold",
-                },
-                {
-                  label: "Silver",
-                },
-              ],
+              value: "jewelery",
+              label: "Silver",
+              children: [],
             },
           ],
         },
@@ -181,7 +158,7 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
+      this.$emit("selectedCate", data);
     },
   },
 };

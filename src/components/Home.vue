@@ -15,7 +15,6 @@
             placeholder="Search"
             prefix-icon="el-icon-search"
             v-model="searchString"
-            @keyup="liveSearch"
           />
         </el-col>
       </el-row>
@@ -27,11 +26,7 @@
       <el-row>
         <el-col :span="18">
           <el-tag><i class="el-icon-s-operation" />Bộ lọc</el-tag>
-          <el-select
-            v-model="filtedPrice"
-            placeholder="Lọc theo giá"
-            @change="filterProduct"
-          >
+          <el-select v-model="filtedPrice" placeholder="Lọc theo giá">
             <el-option
               v-for="item in prices"
               :key="item.value"
@@ -45,7 +40,9 @@
     </div>
     <div class="product">
       <el-row>
-        <el-col :span="6"><SideBar /></el-col>
+        <el-col :span="6"
+          ><SideBar @selectedCate="filterCate($event)"
+        /></el-col>
         <el-col :span="18">
           <ProductList :products="getProductList" />
         </el-col>
@@ -74,9 +71,16 @@ export default {
       categories: ["men clothing", "women clothing", "electronics", "jewelery"],
       filtedProducts: [],
       filtedPrice: "",
-      filtedCate: "",
+      filtedCate: {
+        cate: "",
+        label: "",
+      },
       searchString: "",
       prices: [
+        {
+          label: "All",
+          value: 0,
+        },
         {
           label: "< $50.0",
           value: 50,
@@ -107,7 +111,8 @@ export default {
 
   computed: {
     getProductList() {
-      return this.filtedProducts ? this.filtedProducts : [];
+      this.filterProduct();
+      return this.filtedProducts;
     },
 
     getCategoryList() {
@@ -116,8 +121,8 @@ export default {
   },
 
   methods: {
-    getAllProduct() {
-      axios("https://fakestoreapi.com/products")
+    async getAllProduct() {
+      await axios("https://fakestoreapi.com/products")
         .then((res) => {
           this.parseData(res.data);
         })
@@ -130,55 +135,31 @@ export default {
     },
 
     filterProduct() {
-      this.filtedProducts = this.productList.filter(this.fillPro);
-      console.log(this.filtedProducts);
+      this.filtedProducts = this.productList.filter((product) => {
+        if (this.filtedCate.cate != "") {
+          if (product.category === this.filtedCate.cate) {
+            if (
+              this.filtedCate.label != "" &&
+              product.title.includes(this.filtedCate.label) == true
+            ) {
+              return this.filterPrice(product);
+            }
+          }
+        } else {
+          return this.filterPrice(product);
+        }
+      });
     },
 
-    fillPro(product) {
-      if (this.filtedCate != null) {
-        if (product.category === this.filtedCate) {
-          switch (this.filtedPrice) {
-            case 0:
-              return product;
+    filterCate(data) {
+      if (data.children.length == 0) {
+        this.filtedCate.cate = data.value;
+        this.filtedCate.label = data.label;
+      }
+    },
 
-            case 50:
-              if (product.price < 50) {
-                return product;
-              }
-              break;
-
-            case 100:
-              if (50 < product.price < 100) {
-                return product;
-              }
-              break;
-
-            case 500:
-              if (100 < product.price < 500) {
-                return product;
-              }
-              break;
-
-            case 750:
-              if (500 < product.price < 750) {
-                return product;
-              }
-              break;
-
-            case 1000:
-              if (750 < product.price < 1000) {
-                return product;
-              }
-              break;
-
-            case 1001:
-              if (1000 < product.price) {
-                return product;
-              }
-              break;
-          }
-        }
-      } else {
+    filterPrice(product) {
+      if (this.filtedPrice != "") {
         switch (this.filtedPrice) {
           case 0:
             return product;
@@ -190,25 +171,25 @@ export default {
             break;
 
           case 100:
-            if (50 < product.price < 100) {
+            if (50 < product.price && product.price < 100) {
               return product;
             }
             break;
 
           case 500:
-            if (100 < product.price < 500) {
+            if (100 < product.price && product.price < 500) {
               return product;
             }
             break;
 
           case 750:
-            if (500 < product.price < 750) {
+            if (500 < product.price && product.price < 750) {
               return product;
             }
             break;
 
           case 1000:
-            if (750 < product.price < 1000) {
+            if (750 < product.price && product.price < 1000) {
               return product;
             }
             break;
@@ -219,17 +200,18 @@ export default {
             }
             break;
         }
+      } else {
+        return product;
       }
-      // return product;
     },
 
     liveSearch() {
+      console.log(this.getSearchString);
       this.filtedProducts = this.productList.filter((product) => {
         if (product.title.includes(this.searchString) == true) {
           return product;
         }
       });
-      console.log(this.filtedProducts);
     },
   },
 
