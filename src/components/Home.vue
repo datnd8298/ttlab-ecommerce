@@ -142,11 +142,25 @@ export default {
               this.filtedCate.label != "" &&
               product.title.includes(this.filtedCate.label) == true
             ) {
-              return this.filterPrice(product);
+              if (this.searchString != "") {
+                console.log(this.searchString);
+                if (product.title.includes(this.searchString) == true) {
+                  return this.filterPrice(product);
+                }
+              } else {
+                return this.filterPrice(product);
+              }
             }
           }
         } else {
-          return this.filterPrice(product);
+          if (this.searchString != "") {
+            console.log(this.searchString);
+            if (product.title.includes(this.searchString) == true) {
+              return this.filterPrice(product);
+            }
+          } else {
+            return this.filterPrice(product);
+          }
         }
       });
     },
@@ -206,12 +220,12 @@ export default {
     },
 
     liveSearch() {
-      console.log(this.getSearchString);
-      this.filtedProducts = this.productList.filter((product) => {
-        if (product.title.includes(this.searchString) == true) {
-          return product;
-        }
-      });
+      console.log(this.searchString);
+      // this.filtedProducts = this.productList.filter((product) => {
+      //   if (product.title.includes(this.searchString) == true) {
+      //     return product;
+      //   }
+      // });
     },
   },
 

@@ -13,6 +13,11 @@ export default {
     return {
       data: [
         {
+          label: "All",
+          children: [],
+          value: "",
+        },
+        {
           label: "Men Clothing",
           children: [
             {
